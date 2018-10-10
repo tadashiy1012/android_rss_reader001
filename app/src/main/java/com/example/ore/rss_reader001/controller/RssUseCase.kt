@@ -17,4 +17,8 @@ class RssUseCase {
         EventBus.getDefault().post(RssEvent(RssEvent.TYPE.SET_URL))
     }
 
+    public fun requestUnsetUrl() {
+        EventBus.getDefault().post(RssEvent(RssEvent.TYPE.UNSET_URL))
+    }
+
 }

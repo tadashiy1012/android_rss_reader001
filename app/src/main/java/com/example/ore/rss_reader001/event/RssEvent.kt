@@ -7,7 +7,7 @@ import org.jdeferred2.Promise
 class RssEvent(eventType: RssEvent.TYPE) {
 
     enum class TYPE {
-        GET_FEED, GET_URL, SET_URL
+        GET_FEED, GET_URL, SET_URL, UNSET_URL
     }
 
     public var eventType: RssEvent.TYPE? = null
@@ -28,6 +28,10 @@ class RssEvent(eventType: RssEvent.TYPE) {
 
     public fun setRssFeedUrl(url: String): Promise<Boolean, String, Void>? {
         return rssLogic.putFeedUrl(url)
+    }
+
+    public fun unsetRssFeedUrl(url: String): Promise<Boolean, String, Void>? {
+        return rssLogic.removeFeedUrl(url)
     }
 
 }
