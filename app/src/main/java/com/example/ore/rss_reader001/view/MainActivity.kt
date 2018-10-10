@@ -10,15 +10,29 @@ import com.example.ore.rss_reader001.controller.RssUseCase
 import com.example.ore.rss_reader001.database.table.FeedUrl
 import com.example.ore.rss_reader001.database.table.FeedUrl_Table.id
 import com.example.ore.rss_reader001.database.table.FeedUrl_Table.url
+import com.example.ore.rss_reader001.event.RssEvent
 import com.raizlabs.android.dbflow.kotlinextensions.from
 import com.raizlabs.android.dbflow.kotlinextensions.list
 import com.raizlabs.android.dbflow.kotlinextensions.select
 import com.raizlabs.android.dbflow.kotlinextensions.where
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
     private val useCase: RssUseCase by inject()
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +57,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return result
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public fun onEvent(event: RssEvent) {
+        println("[onEvent@MainActivity]")
+        println(event.eventType)
     }
 
 }
