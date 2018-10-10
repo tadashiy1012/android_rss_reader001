@@ -22,6 +22,12 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://www.jitpack.io" }
+}
+
+def dbflow_version = "4.2.4"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -30,4 +36,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'org.koin:koin-android:1.0.1'
+    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:${dbflow_version}"
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.jdeferred.v2:jdeferred-core:2.0.0-beta1'
+    implementation 'org.jdeferred.v2:jdeferred-android-aar:2.0.0-beta1'
+    implementation 'com.rometools:rome:1.11.0'
 }
