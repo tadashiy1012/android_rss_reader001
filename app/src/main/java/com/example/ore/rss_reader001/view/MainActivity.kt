@@ -7,6 +7,13 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.ore.rss_reader001.R
 import com.example.ore.rss_reader001.controller.RssUseCase
+import com.example.ore.rss_reader001.database.table.FeedUrl
+import com.example.ore.rss_reader001.database.table.FeedUrl_Table.id
+import com.example.ore.rss_reader001.database.table.FeedUrl_Table.url
+import com.raizlabs.android.dbflow.kotlinextensions.from
+import com.raizlabs.android.dbflow.kotlinextensions.list
+import com.raizlabs.android.dbflow.kotlinextensions.select
+import com.raizlabs.android.dbflow.kotlinextensions.where
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {

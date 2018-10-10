@@ -6,13 +6,15 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
 import com.raizlabs.android.dbflow.structure.BaseModel
 
-@Table(name = "feed_urls", database = MyAppDatabase::class)
-class FeedUrl: BaseModel() {
+@Table(name = "feed_urls", database = MyAppDatabase::class, allFields = true)
+class FeedUrl: BaseModel {
 
     @PrimaryKey(autoincrement = true)
     var id: Long = 0
 
     @Column
     var url: String = ""
+
+    constructor() {}
 
 }

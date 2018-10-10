@@ -1,6 +1,12 @@
 package com.example.ore.rss_reader001.model
 
 import com.example.ore.rss_reader001.database.table.FeedUrl
+import com.example.ore.rss_reader001.database.table.FeedUrl_Table
+import com.example.ore.rss_reader001.database.table.FeedUrl_Table.url
+import com.raizlabs.android.dbflow.kotlinextensions.from
+import com.raizlabs.android.dbflow.kotlinextensions.list
+import com.raizlabs.android.dbflow.kotlinextensions.select
+import com.raizlabs.android.dbflow.kotlinextensions.where
 import com.raizlabs.android.dbflow.sql.language.SQLite
 import com.rometools.rome.feed.synd.SyndFeed
 import com.rometools.rome.io.SyndFeedInput
@@ -22,6 +28,25 @@ class RssLogic {
             val feedUrl = FeedUrl()
             feedUrl.url = urlstr
             feedUrl.insert()
+            return@Callable true
+        }).done(DoneCallback {
+            deferred.resolve(it)
+        }).fail(FailCallback {
+            deferred.reject(it.message)
+        })
+        return deferred.promise()
+    }
+
+    public fun removeFeedUrl(urlstr: String): Promise<Boolean, String, Void>? {
+        val deferred: Deferred<Boolean, String, Void> = AndroidDeferredObject()
+        DefaultDeferredManager().`when`(Callable {
+            val ls = (select
+                    from FeedUrl::class
+                    where (url.`is`(urlstr))
+                    ).list
+            for (item in ls) {
+                item.delete()
+            }
             return@Callable true
         }).done(DoneCallback {
             deferred.resolve(it)
