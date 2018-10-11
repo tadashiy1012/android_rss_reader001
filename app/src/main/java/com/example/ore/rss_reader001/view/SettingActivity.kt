@@ -2,9 +2,11 @@ package com.example.ore.rss_reader001.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.NavUtils
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import com.example.ore.rss_reader001.R
@@ -41,7 +43,6 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
         setSupportActionBar(findViewById(R.id.toolbar2))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
         recyclerView = findViewById<RecyclerView>(R.id.rview1)
         recyclerView?.layoutManager = LinearLayoutManager(this)
         rViewAdapter = MyRViewAdapter(dataLs)
@@ -57,6 +58,20 @@ class SettingActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         useCase.requestGetUrls()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val result: Boolean = when (item?.itemId) {
+            android.R.id.home -> {
+                println("click!")
+                NavUtils.navigateUpFromSameTask(this)
+                return true
+            }
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
+        }
+        return result
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

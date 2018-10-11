@@ -21,9 +21,16 @@
         </activity>
         <activity
             android:name=".view.SettingActivity"
-            android:parentActivityName=".view.MainActivity" />
+            android:parentActivityName=".view.MainActivity"
+            android:launchMode="singleTop">
+        </activity>
         <activity android:name=".view.ContentActivity"
-            android:parentActivityName=".view.MainActivity"></activity>
+            android:parentActivityName=".view.MainActivity"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package com.example.ore.rss_reader001.view
 
-import android.content.BroadcastReceiver
 import android.content.Intent
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
@@ -12,18 +11,15 @@ import android.widget.TextView
 import com.example.ore.rss_reader001.R
 import com.example.ore.rss_reader001.util.MyDiffUtilCallback
 import com.rometools.rome.feed.synd.SyndEntry
-import com.rometools.rome.feed.synd.SyndFeed
-import kotlinx.android.synthetic.main.feed_rview_row.view.*
 import org.koin.standalone.KoinComponent
-import org.w3c.dom.Text
 
-class FeedRViewAdapter(list: MutableList<FeedRViewItemData>):
+class FeedRViewAdapter(dataList: MutableList<FeedRViewItemData>):
         RecyclerView.Adapter<FeedRViewAdapter.Companion.MyViewHolder>(), KoinComponent {
 
-    var list: MutableList<FeedRViewItemData> = mutableListOf()
+    var dataList: MutableList<FeedRViewItemData> = mutableListOf()
 
     init {
-        this.list = list
+        this.dataList = dataList
     }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyViewHolder {
@@ -32,19 +28,19 @@ class FeedRViewAdapter(list: MutableList<FeedRViewItemData>):
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return dataList.size
     }
 
     override fun onBindViewHolder(p0: MyViewHolder, p1: Int) {
         p0.itemId = p1
-        p0.itemEntry = list.get(p1).entry!!
-        p0.title.setText(list.get(p1).entry?.title)
-        p0.feedTitle.setText(list[p1].feedTitle)
+        p0.itemEntry = dataList.get(p1).entry!!
+        p0.title.setText(dataList.get(p1).entry?.title)
+        p0.feedTitle.setText(dataList[p1].feedTitle)
     }
 
     fun updateList(newList: MutableList<FeedRViewItemData>) {
-        val result: DiffUtil.DiffResult = DiffUtil.calculateDiff(MyDiffUtilCallback(list, newList), true)
-        list = newList
+        val result: DiffUtil.DiffResult = DiffUtil.calculateDiff(MyDiffUtilCallback(dataList, newList), true)
+        dataList = newList
         result.dispatchUpdatesTo(this)
     }
 
@@ -58,7 +54,6 @@ class FeedRViewAdapter(list: MutableList<FeedRViewItemData>):
             init {
                 container.setOnClickListener {
                     println("click! " + itemId.toString())
-                    println(itemEntry)
                     val intent = Intent(it.context, ContentActivity::class.java)
                     var content = ""
                     itemEntry?.contents!!.forEach {

@@ -21,6 +21,7 @@ class MyApplication : android.app.Application() {
 
     private val appModule = module {
         factory { RssUseCase() }
+        single { MyStateStore() }
     }
 
 }

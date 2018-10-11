@@ -11,7 +11,7 @@ import com.example.ore.rss_reader001.controller.RssUseCase
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class MyRViewAdapter(private val list: MutableList<String>):
+class MyRViewAdapter(val dataList: MutableList<String>):
         RecyclerView.Adapter<MyRViewAdapter.Companion.MyViewHolder>(), KoinComponent {
 
     private val useCase: RssUseCase by inject()
@@ -23,16 +23,20 @@ class MyRViewAdapter(private val list: MutableList<String>):
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return dataList.size
     }
 
     override fun onBindViewHolder(p0: MyViewHolder, p1: Int) {
-        p0.url.setText(list[p1])
+        p0.url.setText(dataList[p1])
         p0.btn.setOnClickListener {
             println(p1)
-            val url = list[p1]
+            val url = dataList[p1]
             useCase.requestUnsetUrl(url)
         }
+    }
+
+    fun getCurrentDataList(): MutableList<String> {
+        return dataList
     }
 
     companion object {
