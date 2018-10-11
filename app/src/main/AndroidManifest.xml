@@ -19,7 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.SettingActivity"
+        <activity
+            android:name=".view.SettingActivity"
+            android:parentActivityName=".view.MainActivity" />
+        <activity android:name=".view.ContentActivity"
             android:parentActivityName=".view.MainActivity"></activity>
     </application>
 

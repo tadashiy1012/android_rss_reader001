@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
+        useCase.requestGetRss()
+        println(">onStart")
     }
 
     override fun onStop() {
@@ -49,12 +51,12 @@ class MainActivity : AppCompatActivity() {
         feedRview = findViewById(R.id.feedrview)
         feedRview?.layoutManager = LinearLayoutManager(this)
         rViewAdapter = FeedRViewAdapter(dataLs)
-        feedRview?.swapAdapter(rViewAdapter, false)
+        feedRview?.adapter = rViewAdapter
+        rViewAdapter?.notifyDataSetChanged()
     }
 
     override fun onResume() {
         super.onResume()
-        useCase.requestGetRss()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -67,6 +69,10 @@ class MainActivity : AppCompatActivity() {
             R.id.setting -> {
                 val intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
+                true
+            }
+            R.id.reload -> {
+                useCase.requestGetRss()
                 true
             }
             else -> {
@@ -83,19 +89,19 @@ class MainActivity : AppCompatActivity() {
         when (event.eventType) {
             RssEvent.TYPE.GET_FEED -> {
                 event.getRssFeeds().done(DoneCallback {
-                    dataLs.clear()
+                    var ls: MutableList<FeedRViewItemData> = arrayListOf()
                     for (feed in it) {
                         for (entry in feed.entries) {
-                            dataLs.add(FeedRViewItemData(feed.title, entry))
-                            println(entry.publishedDate.time)
+                            ls.add(FeedRViewItemData(feed.title, entry))
                         }
                     }
-                    dataLs.sortWith(Comparator {
+                    ls.sortWith(Comparator {
                         a, b -> a.entry?.publishedDate?.time!!.compareTo(
                             b.entry?.publishedDate?.time!!)
                     })
-                    dataLs.reverse()
-                    rViewAdapter?.notifyDataSetChanged()
+                    ls.reverse()
+                    //rViewAdapter?.notifyDataSetChanged()
+                    rViewAdapter?.updateList(ls)
                     println(">getRssFeeds done")
                 })
             }

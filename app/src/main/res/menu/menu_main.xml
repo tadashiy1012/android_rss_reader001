@@ -3,7 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/reload"
+        android:icon="@drawable/ic_action_reload"
+        android:title="reload"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/setting"
+        android:icon="@drawable/ic_action_setting"
         android:title="setting"
         app:showAsAction="ifRoom" />
 </menu>
