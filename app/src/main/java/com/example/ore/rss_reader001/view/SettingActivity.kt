@@ -43,6 +43,7 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
         setSupportActionBar(findViewById(R.id.toolbar2))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
         recyclerView = findViewById<RecyclerView>(R.id.rview1)
         recyclerView?.layoutManager = LinearLayoutManager(this)
         rViewAdapter = MyRViewAdapter(dataLs)
@@ -63,8 +64,7 @@ class SettingActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val result: Boolean = when (item?.itemId) {
             android.R.id.home -> {
-                println("click!")
-                NavUtils.navigateUpFromSameTask(this)
+                finish()
                 return true
             }
             else -> {

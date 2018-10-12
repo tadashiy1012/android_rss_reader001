@@ -2,6 +2,7 @@ package com.example.ore.rss_reader001.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.TextView
 import com.example.ore.rss_reader001.R
 import java.text.SimpleDateFormat
@@ -32,4 +33,18 @@ class ContentActivity : AppCompatActivity() {
         content?.text = intent.getStringExtra("entryContent")
         link?.text = intent.getStringExtra("entryLink")
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val result = when (item?.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+        return result
+    }
+
 }

@@ -19,17 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.SettingActivity"
-            android:parentActivityName=".view.MainActivity"
-            android:launchMode="singleTop">
+        <activity android:name=".view.SettingActivity">
         </activity>
-        <activity android:name=".view.ContentActivity"
-            android:parentActivityName=".view.MainActivity"
-            android:launchMode="singleTop">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainActivity" />
+        <activity android:name=".view.ContentActivity">
         </activity>
     </application>
 
